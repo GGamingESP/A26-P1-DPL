@@ -18,6 +18,26 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api/:date?", function ( req, res ) {
+  let fecha = req.params.date ;
+  if(fecha){
+    // comprobar si es una fecha
+    if(Date.parse(fecha)){
+      let date = new Date(fecha);
+      let unixDate = date.getTime();
+      let utcDate = date.toUTCString();
+      res.json({unix: unixDate, utc: utcDate})
+    }else{
+      res.json({"error": "Invalid Date"})
+    }
+  }else {
+    // devolver fecha actual en UNIX y UTC
+    let currentDate = Date.now();
+    let currentDateUTC = Date.toISOString()
+    res.json({unix: currentDate, utc: currentDateUTC});
+  }
+})
+
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
