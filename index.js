@@ -27,18 +27,26 @@ app.get("/", function (req, res) {
 app.get('/api/:date?', (req, res) => {
   const inputDate = req.params.date;
 
-  if (!inputDate) {
-    const ahora = new Date();
-    res.json({ unix: ahora.getTime(), utc: ahora.toUTCString() });
+  if (!inputDate) { // Handle empty date parameter
+    const now = new Date();
+    res.json({
+      unix: now.getTime(),
+      utc: now.toUTCString()
+    });
     return;
   }
 
   try {
+    // Validate date using new Date() and catch errors
     const date = new Date(inputDate);
     const unixTimestamp = date.getTime();
     const utcString = date.toUTCString();
-    res.json({ unix: unixTimestamp, utc: utcString });
-  } catch (error) {
+
+    res.json({
+      unix: unixTimestamp,
+      utc: utcString
+    });
+  } catch (error) { // Handle invalid date string
     res.json({ error: "Invalid Date" });
   }
 });
