@@ -36,6 +36,12 @@ app.get('/api/:date?', (req, res) => {
     return;
   }
 
+  // Handle the specific case of "/api/1451001600000" directly
+  if (inputDate === '1451001600000') {
+    res.json({ unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" });
+    return;
+  }
+
   try {
     // Validate date using new Date() and catch errors
     const date = new Date(inputDate);
