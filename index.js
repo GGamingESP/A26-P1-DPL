@@ -9,6 +9,12 @@ var app = express();
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
+var bodyParser = require('body-parser')
+app.use(bodyParser.json() );      
+app.use(bodyParser.urlencoded({     
+  extended: true
+})); 
+
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
